@@ -1,0 +1,34 @@
+package dev.jan.doubleattack;
+
+import com.mojang.blaze3d.platform.InputConstants;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+
+public class DoubleAttackClient implements ClientModInitializer {
+	public static final String MOD_ID = "doubleattack";
+
+	public static boolean enabled = true;
+
+	private static final KeyMapping.Category CATEGORY =
+			KeyMapping.Category.register(Identifier.fromNamespaceAndPath(MOD_ID, "main"));
+
+	@Override
+	public void onInitializeClient() {
+		KeyMapping toggleKey = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+				"key." + MOD_ID + ".toggle", InputConstants.Type.KEYSYM, -1, CATEGORY));
+
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			while (toggleKey.consumeClick()) {
+				enabled = !enabled;
+				if (client.player != null) {
+					client.player.displayClientMessage(
+							Component.literal("Double Attack: " + (enabled ? "ON" : "OFF")), true);
+				}
+			}
+		});
+	}
+}

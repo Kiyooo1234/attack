@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"id": "doubleattack",
+	"version": "${version}",
+	"name": "Double Attack",
+	"description": "Every left click attacks twice (second attack on the next tick). Toggle with a keybind.",
+	"authors": ["Jan Rhey Cantillas"],
+	"license": "MIT",
+	"icon": "assets/doubleattack/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["dev.jan.doubleattack.DoubleAttackClient"]
+	},
+	"mixins": ["doubleattack.mixins.json"],
+	"depends": {
+		"fabricloader": ">=0.18.1",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
